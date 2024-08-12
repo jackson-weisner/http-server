@@ -1,5 +1,5 @@
 package weisner.httpserver;
 
-public enum Method {
+public enum RequestMethod {
     GET, POST, PUT
 }
