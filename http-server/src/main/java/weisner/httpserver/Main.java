@@ -11,7 +11,7 @@ public class Main {
             s.start(8888);
             s.stop();
         } catch (IOException e) {
-            System.out.println("ERROR");
+            DebugOutput.error("can't start the server");
         }
     }
 }

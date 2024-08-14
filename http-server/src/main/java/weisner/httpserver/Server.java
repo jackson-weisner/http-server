@@ -1,7 +1,6 @@
 package weisner.httpserver;
 
-import java.io.IOException;
-import java.lang.annotation.Annotation;
+import java.io.*;
 import java.lang.reflect.Method;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -21,7 +20,6 @@ public class Server {
     public void start(int port) throws IOException {
         this.serverSocket = new ServerSocket(port);
         Socket clientConnection = this.serverSocket.accept();
-        System.out.println("connected");
     }
 
     public void stop() throws IOException {
@@ -31,7 +29,7 @@ public class Server {
     // method to register objects that have the Route annotation
     // this maps methods to URIs so requests can be processed and executed
     public void registerRoutes(Class<?>[] classes) {
-        final Class<Route> routeAnnotation = weisner.httpserver.Route.class;
+        final Class<Route> routeAnnotation = Route.class;
         for (Class<?> c : classes) {
             for (Method m : c.getMethods()) {
                 if (m.isAnnotationPresent(routeAnnotation)) {
