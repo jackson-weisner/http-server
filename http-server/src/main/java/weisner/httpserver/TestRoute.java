@@ -1,9 +1,9 @@
 package weisner.httpserver;
 
 public class TestRoute {
-    public TestRoute() {}
     @Route(uri="/test")
-    public static void testMethod() {
+    public static Response testMethod() {
         System.out.println("running testMethod");
+        return new JsonResponse(200, "json return statement");
     }
 }
