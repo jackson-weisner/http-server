@@ -31,12 +31,15 @@ public class RouteHandler {
    public String executeRoute(String uri) {
         if (this.routeMap.containsKey(uri)) {
             try {
+                DebugOutput.info(uri);
                 return this.routeMap.get(uri).invoke(null).toString();
             } catch (Exception e) {
                 DebugOutput.error("can't invoke route method for uri \"" + uri + "\"");
             }
         } else {
-            return "";
+            DebugOutput.error("client attempted to access " + uri);
+            Response response = new JsonResponse(400, "");
+            return response.toString();
             // TODO generate 404
         }
         // TODO send response to client

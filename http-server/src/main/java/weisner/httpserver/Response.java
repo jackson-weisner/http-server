@@ -6,7 +6,8 @@ import java.util.Map;
 public abstract class Response {
     private final static String escapeCode = "\r\n";
     private final static Map<Integer, String> responseCodeMap = Map.of(
-            200, "OK"
+            200, "OK",
+            404, "Not Found"
     );
     protected Map<String, String> responseHeaders;
     protected final int code;

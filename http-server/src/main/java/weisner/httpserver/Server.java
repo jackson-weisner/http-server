@@ -21,21 +21,20 @@ public class Server {
     // starts the server and waits for a client to join
     public void start(int port) throws IOException {
         this.serverSocket = new ServerSocket(port);
-        Socket clientSocket = this.serverSocket.accept();
+        while (true) {
+            Socket clientSocket = this.serverSocket.accept();
 
-        try (OutputStream out = clientSocket.getOutputStream();
-             InputStream in = clientSocket.getInputStream();
-             BufferedReader br = new BufferedReader(new InputStreamReader(in));
-             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out))) {
+            try (OutputStream out = clientSocket.getOutputStream();
+                 InputStream in = clientSocket.getInputStream();
+                 BufferedReader br = new BufferedReader(new InputStreamReader(in));
+                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out))) {
 
-            System.out.println(br.readLine());
-            this.rh.executeRoute("/test");
-
-//            bw.write("HTTP/1.1 200 OK\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: text/plain; charset=UTF-8\r\nConnection: Keep-Alive\r\nServer: MyServer\r\n\r\nHello World!\r\n");
-            Response response = new JsonResponse(200, "json response");
-            bw.write(response.toString());
+                String firstLine = br.readLine();
+                Request request = new Request(firstLine);
+                bw.write(this.rh.executeRoute(request.getUri()));
+            }
+            clientSocket.close();
         }
-        clientSocket.close();
     }
 
     public void stop() throws IOException {

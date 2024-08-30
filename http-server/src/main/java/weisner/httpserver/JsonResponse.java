@@ -8,6 +8,7 @@ public class JsonResponse extends Response {
         this.addHeader("Content-Type", "application/json");
     }
 
+    @Override
     protected String getResponseData() {
         return this.data;
     }

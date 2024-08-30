@@ -10,6 +10,6 @@ public class DebugOutput {
     }
 
     private static void print(String t, String message) {
-        System.out.println("[" + t + "] " + message + "\n");
+        System.out.println("[" + t + "] " + message);
     }
 }
