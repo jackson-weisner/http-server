@@ -15,7 +15,14 @@ public class Server {
     }
 
     public Server(Class<?>[] classes) {
-        this.rh.registerRoutes(classes);
+        for (Class<?> c : classes) {
+            this.rh.addRouteClass(c);
+        }
+        this.rh.registerRoutes();
+    }
+
+    public Server() {
+        this.rh.registerRoutes();
     }
 
     // starts the server and waits for a client to join

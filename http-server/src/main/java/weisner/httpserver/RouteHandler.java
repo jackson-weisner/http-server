@@ -1,21 +1,30 @@
 package weisner.httpserver;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class RouteHandler {
     private final Map<String, Method> routeMap;
+    private List<Class<?>> classList;
 
     {
         this.routeMap = new HashMap<>();
+        this.classList = new ArrayList<>();
+        this.classList.add(Routes.class);
+    }
+
+    public void addRouteClass(Class<?> c) {
+        this.classList.add(c);
     }
 
     // method to register objects that have the Route annotation
     // this maps methods to URIs so requests can be processed and executed
-    public void registerRoutes(Class<?>[] classes) {
+    void registerRoutes() {
         final Class<Route> routeAnnotation = Route.class;
-        for (Class<?> c : classes) {
+        for (Class<?> c : this.classList) {
             for (Method m : c.getMethods()) {
                 if (m.isAnnotationPresent(routeAnnotation)) {
                     String uriString = m.getAnnotation(routeAnnotation).uri();
