@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+class Routes {}
+
 public class RouteHandler {
     private final Map<String, Method> routeMap;
     private List<Class<?>> classList;
