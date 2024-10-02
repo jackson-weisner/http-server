@@ -6,4 +6,7 @@ public class Routes {
 
     @Route(uri = "/test.html")
     public static Response getTestHtml() {return new HtmlResponse(200, "test.html");}
+
+    @Route(uri = "/test.css")
+    public static Response getCss() {return new CssResponse(200, "test.css");}
 }

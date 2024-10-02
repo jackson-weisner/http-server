@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// this class should be defined in the client
 class Routes {}
 
 public class RouteHandler {
