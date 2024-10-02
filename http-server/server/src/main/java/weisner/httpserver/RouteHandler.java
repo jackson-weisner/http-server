@@ -50,7 +50,7 @@ public class RouteHandler {
             }
         } else {
             DebugOutput.error("client attempted to access " + uri);
-            Response response = new JsonResponse(400, "");
+            Response response = new JsonResponse("");
             return response.toString();
             // TODO generate 404
         }

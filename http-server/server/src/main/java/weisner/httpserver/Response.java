@@ -14,13 +14,11 @@ public abstract class Response {
 
     {
         this.responseHeaders = new HashMap<>();
+        this.code = 200;
     }
 
     // this method is for subclasses to determine how to get the content they are providing
     protected abstract String getResponseData();
-    protected Response(int code) {
-        this.code = code;
-    }
 
     // adds "\r\n" to a response line
     private String formatResponseLine(String line) {
