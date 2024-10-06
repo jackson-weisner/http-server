@@ -8,7 +8,7 @@ public class JsonResponse extends Response {
     }
 
     @Override
-    protected String getResponseData() {
+    protected String getResponseData() throws Exception {
         return this.data;
     }
 }

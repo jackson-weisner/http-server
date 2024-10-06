@@ -40,7 +40,7 @@ public class RouteHandler {
 
     // checks if the route map has a method associated with the URI passed in
     // if it does then invoke the method
-   public String executeRoute(String uri) {
+    public String executeRoute(String uri) {
         if (this.routeMap.containsKey(uri)) {
             try {
                 DebugOutput.info(uri);
@@ -55,6 +55,6 @@ public class RouteHandler {
             // TODO generate 404
         }
         // TODO send response to client
-        return "";
+        return "ERROR";
     }
 }

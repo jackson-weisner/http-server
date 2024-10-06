@@ -1,5 +1,6 @@
 package weisner.httpserver;
 
+import java.awt.datatransfer.StringSelection;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -14,6 +15,7 @@ public class Server {
         this.rh = new RouteHandler();
     }
 
+    // optional constructor to pass in a different class than Routes
     public Server(Class<?>[] classes) {
         for (Class<?> c : classes) {
             this.rh.addRouteClass(c);
@@ -31,13 +33,17 @@ public class Server {
         while (true) {
             Socket clientSocket = this.serverSocket.accept();
 
+            // try block for receiving requests from clients and sending responses
             try (OutputStream out = clientSocket.getOutputStream();
                  InputStream in = clientSocket.getInputStream();
                  BufferedReader br = new BufferedReader(new InputStreamReader(in));
                  BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out))) {
-
-                String firstLine = br.readLine();
-                Request request = new Request(firstLine);
+                StringBuilder stringBuilder = new StringBuilder();
+                while (br.ready()) {
+                    stringBuilder.append(br.readLine());
+                    stringBuilder.append("\n");
+                }
+                Request request = new Request(stringBuilder.toString());
                 bw.write(this.rh.executeRoute(request.getUri()));
             }
             clientSocket.close();

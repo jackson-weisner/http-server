@@ -9,4 +9,7 @@ public class Routes {
 
     @Route(uri = "/test.css")
     public static Response getCss() {return new CssResponse("test.css");}
+
+    @Route(uri = "/favicon.ico")
+    public static Response favicon() {return new JsonResponse("response");}
 }

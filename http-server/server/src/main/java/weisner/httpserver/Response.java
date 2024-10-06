@@ -10,15 +10,21 @@ public abstract class Response {
             404, "Not Found"
     );
     protected Map<String, String> responseHeaders;
-    protected final int code;
+    protected int code;
 
     {
         this.responseHeaders = new HashMap<>();
         this.code = 200;
     }
 
+    private String errorResponse() {
+        this.code = 404;
+        DebugOutput.error("error getting response data");
+        return "ERROR";
+    }
+
     // this method is for subclasses to determine how to get the content they are providing
-    protected abstract String getResponseData();
+    protected abstract String getResponseData() throws Exception;
 
     // adds "\r\n" to a response line
     private String formatResponseLine(String line) {
@@ -37,7 +43,13 @@ public abstract class Response {
             response.append(this.formatResponseLine(e.getKey() + ": " + e.getValue()));
         }
         response.append(this.formatResponseLine(""));
-        response.append(this.formatResponseLine(this.getResponseData()));
+        String responseData = "";
+        try {
+            responseData = this.formatResponseLine(this.getResponseData());
+        } catch (Exception e) {
+            responseData = this.errorResponse();
+        }
+        response.append(responseData);
         return response.toString();
     }
 }

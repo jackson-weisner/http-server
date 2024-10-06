@@ -12,18 +12,13 @@ public abstract class FileResponse extends Response {
         this.fileName = fileName;
     }
     @Override
-    protected String getResponseData() {
-        try {
-            // TODO: prevent injection
-            File inputFile = new File(FileResponse.path + this.fileName);
-            Scanner fileScanner = new Scanner(inputFile);
-            StringBuilder sb = new StringBuilder();
-            while (fileScanner.hasNextLine()) {
-                sb.append(fileScanner.nextLine());
-            }
-            return sb.toString();
-        } catch (IOException e) {
-            return "ERROR";
+    protected String getResponseData() throws Exception {
+        File inputFile = new File(FileResponse.path + this.fileName);
+        Scanner fileScanner = new Scanner(inputFile);
+        StringBuilder sb = new StringBuilder();
+        while (fileScanner.hasNextLine()) {
+            sb.append(fileScanner.nextLine());
         }
+        return sb.toString();
     }
 }
