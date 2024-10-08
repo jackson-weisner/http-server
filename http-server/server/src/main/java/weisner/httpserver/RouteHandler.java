@@ -40,11 +40,12 @@ public class RouteHandler {
 
     // checks if the route map has a method associated with the URI passed in
     // if it does then invoke the method
-    public String executeRoute(String uri) {
+    public String executeRoute(Request request) {
+        String uri = request.getUri();
         if (this.routeMap.containsKey(uri)) {
             try {
                 DebugOutput.info(uri);
-                return this.routeMap.get(uri).invoke(null).toString();
+                return this.routeMap.get(uri).invoke(null, request).toString();
             } catch (Exception e) {
                 DebugOutput.error("can't invoke route method for uri \"" + uri + "\"");
             }

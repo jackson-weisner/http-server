@@ -44,7 +44,7 @@ public class Server {
                     stringBuilder.append("\n");
                 }
                 Request request = new Request(stringBuilder.toString());
-                bw.write(this.rh.executeRoute(request.getUri()));
+                bw.write(this.rh.executeRoute(request));
             }
             clientSocket.close();
         }
