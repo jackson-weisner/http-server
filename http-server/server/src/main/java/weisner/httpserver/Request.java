@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Request {
-    private RequestMethod method;
+    private String method;
     private String uri;
     private final List<String> requestLines;
     private Map<String, String> uriParameters;
@@ -21,10 +21,11 @@ public class Request {
     // parses the request method and uri from the request lines
     private void parseFirstLine() {
         String[] lineComponents = this.requestLines.get(0).split(" ");
-        switch (lineComponents[0]) {
-            case "GET":     this.method = RequestMethod.GET; break;
-            case "POST":    this.method = RequestMethod.POST; break;
-        }
+        this.method = lineComponents[0];
+//        switch (lineComponents[0]) {
+//            case "GET":     this.method = RequestMethod.GET; break;
+//            case "POST":    this.method = RequestMethod.POST; break;
+//        }
         this.parseUri(lineComponents[1]);
     }
 
@@ -48,7 +49,7 @@ public class Request {
         }
     }
 
-    public RequestMethod getMethod() { return this.method; }
+    public String getMethod() { return this.method; }
 
     public Map<String, String> getUriParameters() { return this.uriParameters; }
 

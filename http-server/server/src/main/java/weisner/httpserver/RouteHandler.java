@@ -1,5 +1,6 @@
 package weisner.httpserver;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,7 +11,20 @@ import java.util.Map;
 class Routes {}
 
 public class RouteHandler {
-    private final Map<String, Method> routeMap;
+    // this class contains the method associated with the Route annotation
+    // and includes the http method
+    // this is used for checking when executing the routes
+    private class RouteInfo {
+        private Method routeMethod;
+        private String httpMethod;
+        public RouteInfo(Method routeMethod, String httpMethod) {
+            this.routeMethod = routeMethod;
+            this.httpMethod = httpMethod;
+        }
+        public Method getRouteMethod() { return this.routeMethod; }
+        public String getHttpMethod() { return this.httpMethod; }
+    }
+    private final Map<String, RouteInfo> routeMap;
     private List<Class<?>> classList;
 
     {
@@ -30,9 +44,9 @@ public class RouteHandler {
         for (Class<?> c : this.classList) {
             for (Method m : c.getMethods()) {
                 if (m.isAnnotationPresent(routeAnnotation)) {
-                    String uriString = m.getAnnotation(routeAnnotation).uri();
-                    this.routeMap.put(uriString, m);
-                    DebugOutput.info("registered route " + uriString);
+                    var annotation = m.getAnnotation(routeAnnotation);
+                    this.routeMap.put(annotation.uri(), new RouteInfo(m, annotation.method()));
+                    DebugOutput.info("registered route " + annotation.uri());
                 }
             }
         }
@@ -45,7 +59,7 @@ public class RouteHandler {
         if (this.routeMap.containsKey(uri)) {
             try {
                 DebugOutput.info(uri);
-                return this.routeMap.get(uri).invoke(null, request).toString();
+                return this.routeMap.get(uri).getRouteMethod().invoke(null, request).toString();
             } catch (Exception e) {
                 DebugOutput.error("can't invoke route method for uri \"" + uri + "\"");
             }
