@@ -59,6 +59,10 @@ public class RouteHandler {
         if (this.routeMap.containsKey(uri)) {
             try {
                 DebugOutput.info(uri);
+                RouteInfo routeInfo = this.routeMap.get(uri);
+                if (!request.getMethod().equals(routeInfo.getHttpMethod())) {
+                    throw new Exception();
+                }
                 return this.routeMap.get(uri).getRouteMethod().invoke(null, request).toString();
             } catch (Exception e) {
                 DebugOutput.error("can't invoke route method for uri \"" + uri + "\"");
