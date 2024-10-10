@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 public abstract class FileResponse extends Response {
     private final String fileName;
-//    private static final String pathPrefix = System.getProperty("user.dir") + "/../../../../content/";
     private static final String path = "client/content/";
     protected FileResponse(String fileName) {
         this.fileName = fileName;
