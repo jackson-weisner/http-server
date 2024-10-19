@@ -39,9 +39,10 @@ public class Server {
                  BufferedReader br = new BufferedReader(new InputStreamReader(in));
                  BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out))) {
                 StringBuilder stringBuilder = new StringBuilder();
+                char[] buffer = new char[1024];
                 while (br.ready()) {
-                    stringBuilder.append(br.readLine());
-                    stringBuilder.append("\n");
+                    if (br.read(buffer) == -1) break;
+                    stringBuilder.append(buffer).append("\n");
                 }
                 Request request = new Request(stringBuilder.toString());
                 bw.write(this.rh.executeRoute(request));
