@@ -71,9 +71,7 @@ public class RouteHandler {
             DebugOutput.error("client attempted to access " + uri);
             Response response = new JsonResponse("");
             return response.toString();
-            // TODO generate 404
         }
-        // TODO send response to client
         return "ERROR";
     }
 }
