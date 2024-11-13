@@ -8,7 +8,10 @@ import java.util.List;
 import java.util.Map;
 
 // this class should be defined in the client
-class Routes {}
+class Routes {
+    @Route(uri = "/testt", method = "GET")
+    public static Response test(Request request) { return new JsonResponse("asdf"); }
+}
 
 public class RouteHandler {
     // this class contains the method associated with the Route annotation

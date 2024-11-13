@@ -5,6 +5,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+
 // this class waits for client connections
 public class Server {
     public final static String httpVersion = "HTTP/1.1";
@@ -32,26 +33,17 @@ public class Server {
         this.serverSocket = new ServerSocket(port);
         while (true) {
             Socket clientSocket = this.serverSocket.accept();
-
-            // try block for receiving requests from clients and sending responses
-            try (OutputStream out = clientSocket.getOutputStream();
-                 InputStream in = clientSocket.getInputStream();
-                 BufferedReader br = new BufferedReader(new InputStreamReader(in));
-                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out))) {
-                StringBuilder stringBuilder = new StringBuilder();
-                char[] buffer = new char[1024];
-                while (br.ready()) {
-                    if (br.read(buffer) == -1) break;
-                    stringBuilder.append(buffer).append("\n");
-                }
-                Request request = new Request(stringBuilder.toString());
-                bw.write(this.rh.executeRoute(request));
-            }
-            clientSocket.close();
+            ClientConnection clientConnection = new ClientConnection(clientSocket, this.rh);
+            Thread thread = new Thread(clientConnection);
+            thread.start();
         }
     }
 
-    public void stop() throws IOException {
-        this.serverSocket.close();
+    public void stop() {
+        try {
+            this.serverSocket.close();
+        } catch (IOException e) {
+            DebugOutput.info("Server closed");
+        }
     }
 }
