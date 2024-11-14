@@ -62,9 +62,11 @@ public class Request {
     private void parseUri(String uri) {
         // put the parameters into the hashmap
         String[] splitParameters = uri.split("&");
-        for (String pair : splitParameters) {
-            String[] keyValue = pair.split("=");
-            this.uriParameters.put(keyValue[0], keyValue[1]);
+        if (splitParameters.length > 1) {
+            for (String pair : splitParameters) {
+                String[] keyValue = pair.split("=");
+                this.uriParameters.put(keyValue[0], keyValue[1]);
+            }
         }
     }
 
