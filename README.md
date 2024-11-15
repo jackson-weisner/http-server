@@ -20,3 +20,4 @@ The subclasses of Response are the following:
 - JavascriptResponse
 - JsonResponse
 - CssResponse
+- ImageResponse (.png|.jpeg|.gif)
