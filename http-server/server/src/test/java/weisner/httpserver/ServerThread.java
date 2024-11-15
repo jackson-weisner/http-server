@@ -5,7 +5,7 @@ import java.io.IOException;
 public class ServerThread extends Thread {
 
     private final Server server;
-    public ServerThread() { this.server = new Server(); }
+    public ServerThread(Server server) { this.server = server; }
     public void stopServer() {
         this.server.stop();
     }

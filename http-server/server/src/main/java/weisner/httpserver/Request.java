@@ -16,6 +16,7 @@ public class Request {
 
     public Request(String s) {
         this.requestLines = s.lines().collect(Collectors.toList());
+        this.requestLines.add(this.requestLines.get(this.requestLines.size()-1).trim());
         this.uriParameters = new HashMap<>();
         this.requestHeaders = new HashMap<>();
         this.parseFirstLine();
@@ -62,7 +63,7 @@ public class Request {
     private void parseUri(String uri) {
         // put the parameters into the hashmap
         String[] splitParameters = uri.split("&");
-        if (splitParameters.length > 1) {
+        if (splitParameters.length > 0 && splitParameters[0].length() > 0) {
             for (String pair : splitParameters) {
                 String[] keyValue = pair.split("=");
                 this.uriParameters.put(keyValue[0], keyValue[1]);

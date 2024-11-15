@@ -1,9 +1,6 @@
 package weisner.httpserver;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -17,20 +14,20 @@ public class RequestRunner {
             URL url = new URL(urlString);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod(method);
-            connection.setDoOutput(true);
             if (method.equals("POST")) {
+                connection.setDoOutput(true);
                 connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                DataOutputStream out = new DataOutputStream(connection.getOutputStream());
-                out.writeChars((body == null) ? "" : body);
+                OutputStream out = connection.getOutputStream();
+                out.write((body == null) ? "\r\n\r\n".getBytes() : body.getBytes());
                 out.close();
             }
             InputStream is = connection.getInputStream();
             BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-            StringBuilder response = new StringBuilder(); // or StringBuffer if Java version 5+
+            StringBuilder response = new StringBuilder();
             String line;
             while ((line = rd.readLine()) != null) {
                 response.append(line);
-                response.append('\r');
+//                response.append('\r');
             }
             rd.close();
             return response.toString();

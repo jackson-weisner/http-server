@@ -12,7 +12,7 @@ public abstract class FileResponse extends Response {
     }
     @Override
     protected String getResponseData() throws Exception {
-        File inputFile = new File(FileResponse.path + this.fileName);
+        File inputFile = new File(this.fileName);
         Scanner fileScanner = new Scanner(inputFile);
         StringBuilder sb = new StringBuilder();
         while (fileScanner.hasNextLine()) {

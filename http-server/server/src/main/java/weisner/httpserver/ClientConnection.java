@@ -2,6 +2,8 @@ package weisner.httpserver;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.List;
+import java.util.stream.Collectors;
 
 // class for handling client connections from the server
 // enables multithreading
@@ -31,7 +33,7 @@ class ClientConnection implements Runnable {
             }
             Request request = new Request(stringBuilder.toString());
             bw.write(this.rhInstance.executeRoute(request));
-        } catch (IOException e) {
+        } catch (Exception e) {
             DebugOutput.error("An error has occurred");
         } finally {
             try {
