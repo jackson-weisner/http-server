@@ -12,4 +12,7 @@ public class Routes {
 
     @Route(uri = "/favicon.ico", method = "GET")
     public static Response favicon(Request request) {return new JsonResponse("response");}
+
+    @Route(uri = "/test.png", method = "GET")
+    public static Response png(Request request) {return new ImageResponse("client/content/test.png");}
 }

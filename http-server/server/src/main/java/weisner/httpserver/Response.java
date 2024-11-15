@@ -1,5 +1,7 @@
 package weisner.httpserver;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,7 +37,7 @@ public abstract class Response {
     protected void addHeader(String k, String v) {
         this.responseHeaders.put(k, v);
     }
-
+    public Map<String, String> getResponseHeaders() { return this.responseHeaders; }
     @Override
     public String toString() {
         StringBuilder response = new StringBuilder(this.formatResponseLine(Server.httpVersion + " " + this.code + " " + Response.responseCodeMap.get(this.code)));

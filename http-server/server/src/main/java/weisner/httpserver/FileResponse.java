@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public abstract class FileResponse extends Response {
-    private final String fileName;
+    protected final String fileName;
     private static final String path = "client/content/";
     protected FileResponse(String fileName) {
         this.fileName = fileName;
