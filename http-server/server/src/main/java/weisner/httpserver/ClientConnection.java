@@ -21,8 +21,7 @@ class ClientConnection implements Runnable {
         // create all the streams ect
         try (OutputStream out = clientSocket.getOutputStream();
              InputStream in = clientSocket.getInputStream();
-             BufferedReader br = new BufferedReader(new InputStreamReader(in));
-             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out))) {
+             BufferedReader br = new BufferedReader(new InputStreamReader(in))) {
             StringBuilder stringBuilder = new StringBuilder();
 
             // read all content from the socket
@@ -32,7 +31,7 @@ class ClientConnection implements Runnable {
                 stringBuilder.append(buffer).append("\n");
             }
             Request request = new Request(stringBuilder.toString());
-            bw.write(this.rhInstance.executeRoute(request));
+            out.write(this.rhInstance.executeRoute(request));
         } catch (Exception e) {
             DebugOutput.error("An error has occurred");
         } finally {

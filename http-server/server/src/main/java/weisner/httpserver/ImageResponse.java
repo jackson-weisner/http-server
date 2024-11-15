@@ -21,7 +21,7 @@ public class ImageResponse extends FileResponse {
     }
 
     @Override
-    protected String getResponseData() throws Exception {
-        return Files.readString(Paths.get(super.fileName));
+    protected byte[] getResponseData() throws Exception {
+        return Files.readAllBytes(Paths.get(super.fileName));
     }
 }

@@ -11,13 +11,13 @@ public abstract class FileResponse extends Response {
         this.fileName = fileName;
     }
     @Override
-    protected String getResponseData() throws Exception {
+    protected byte[] getResponseData() throws Exception {
         File inputFile = new File(this.fileName);
         Scanner fileScanner = new Scanner(inputFile);
         StringBuilder sb = new StringBuilder();
         while (fileScanner.hasNextLine()) {
             sb.append(fileScanner.nextLine());
         }
-        return sb.toString();
+        return sb.toString().getBytes();
     }
 }

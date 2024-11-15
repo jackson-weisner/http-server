@@ -2,8 +2,7 @@ package weisner.httpserver;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public abstract class Response {
     private final static String escapeCode = "\r\n";
@@ -26,7 +25,7 @@ public abstract class Response {
     }
 
     // this method is for subclasses to determine how to get the content they are providing
-    protected abstract String getResponseData() throws Exception;
+    protected abstract byte[] getResponseData() throws Exception;
 
     // adds "\r\n" to a response line
     private String formatResponseLine(String line) {
@@ -38,20 +37,37 @@ public abstract class Response {
         this.responseHeaders.put(k, v);
     }
     public Map<String, String> getResponseHeaders() { return this.responseHeaders; }
-    @Override
-    public String toString() {
+//    @Override
+//    public String toString() {
+//        StringBuilder response = new StringBuilder(this.formatResponseLine(Server.httpVersion + " " + this.code + " " + Response.responseCodeMap.get(this.code)));
+//        for (var e : this.responseHeaders.entrySet()) {
+//            response.append(this.formatResponseLine(e.getKey() + ": " + e.getValue()));
+//        }
+//        response.append(this.formatResponseLine(""));
+//        String responseData = "";
+//        try {
+//            responseData = this.formatResponseLine(this.getResponseData());
+//        } catch (Exception e) {
+//            responseData = this.errorResponse();
+//        }
+//        response.append(responseData);
+//        return response.toString();
+//    }
+
+    public byte[] toByteArray() {
         StringBuilder response = new StringBuilder(this.formatResponseLine(Server.httpVersion + " " + this.code + " " + Response.responseCodeMap.get(this.code)));
         for (var e : this.responseHeaders.entrySet()) {
             response.append(this.formatResponseLine(e.getKey() + ": " + e.getValue()));
         }
         response.append(this.formatResponseLine(""));
-        String responseData = "";
+        byte[] headers = response.toString().getBytes();
+
+        byte[] responseData;
         try {
-            responseData = this.formatResponseLine(this.getResponseData());
+            responseData = this.getResponseData();
         } catch (Exception e) {
-            responseData = this.errorResponse();
+            responseData = this.errorResponse().getBytes();
         }
-        response.append(responseData);
-        return response.toString();
+        return Bytes.combine(headers, responseData);
     }
 }

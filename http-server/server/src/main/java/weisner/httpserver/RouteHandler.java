@@ -54,7 +54,7 @@ public class RouteHandler {
 
     // checks if the route map has a method associated with the URI passed in
     // if it does then invoke the method
-    public String executeRoute(Request request) {
+    public byte[] executeRoute(Request request) {
         String uri = request.getUri();
         if (this.routeMap.containsKey(uri)) {
             try {
@@ -63,15 +63,16 @@ public class RouteHandler {
                 if (!request.getMethod().equals(routeInfo.getHttpMethod())) {
                     throw new Exception();
                 }
-                return this.routeMap.get(uri).getRouteMethod().invoke(null, request).toString();
+                Response response = (Response)this.routeMap.get(uri).getRouteMethod().invoke(null, request);
+                return response.toByteArray();
             } catch (Exception e) {
                 DebugOutput.error("can't invoke route method for uri \"" + uri + "\"");
             }
         } else {
             DebugOutput.error("client attempted to access " + uri);
             Response response = new JsonResponse("");
-            return response.toString();
+            return response.toString().getBytes();
         }
-        return "ERROR";
+        return "ERROR".getBytes();
     }
 }
