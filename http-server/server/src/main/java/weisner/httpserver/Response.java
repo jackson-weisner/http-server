@@ -37,22 +37,6 @@ public abstract class Response {
         this.responseHeaders.put(k, v);
     }
     public Map<String, String> getResponseHeaders() { return this.responseHeaders; }
-//    @Override
-//    public String toString() {
-//        StringBuilder response = new StringBuilder(this.formatResponseLine(Server.httpVersion + " " + this.code + " " + Response.responseCodeMap.get(this.code)));
-//        for (var e : this.responseHeaders.entrySet()) {
-//            response.append(this.formatResponseLine(e.getKey() + ": " + e.getValue()));
-//        }
-//        response.append(this.formatResponseLine(""));
-//        String responseData = "";
-//        try {
-//            responseData = this.formatResponseLine(this.getResponseData());
-//        } catch (Exception e) {
-//            responseData = this.errorResponse();
-//        }
-//        response.append(responseData);
-//        return response.toString();
-//    }
 
     public byte[] toByteArray() {
         StringBuilder response = new StringBuilder(this.formatResponseLine(Server.httpVersion + " " + this.code + " " + Response.responseCodeMap.get(this.code)));
