@@ -1,10 +1,8 @@
 package weisner.httpserver;
 
-import java.awt.datatransfer.StringSelection;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-
 
 // this class waits for client connections
 public class Server {

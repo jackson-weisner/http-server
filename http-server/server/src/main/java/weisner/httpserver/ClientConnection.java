@@ -2,8 +2,6 @@ package weisner.httpserver;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.List;
-import java.util.stream.Collectors;
 
 // class for handling client connections from the server
 // enables multithreading

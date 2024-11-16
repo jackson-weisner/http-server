@@ -1,7 +1,6 @@
 package weisner.httpserver;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class Bytes {
     // helper method to combine byte arrays together

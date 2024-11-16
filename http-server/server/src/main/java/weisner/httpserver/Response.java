@@ -1,7 +1,5 @@
 package weisner.httpserver;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.*;
 
 public abstract class Response {

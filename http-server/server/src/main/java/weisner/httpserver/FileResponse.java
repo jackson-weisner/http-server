@@ -1,7 +1,6 @@
 package weisner.httpserver;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Scanner;
 
 public abstract class FileResponse extends Response {
